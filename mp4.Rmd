@@ -43,6 +43,20 @@ library(macleish)
 names(macleish_layers)
 ```
 
+```{r}
+points_of_interest <- tribble(
+  ~name, ~lat, ~long,
+  "Group Campsite", 42.450976, -72.678154, 
+  "Remote campsite", 42.458549, -72.679581,
+  "Parking", 42.448013, -72.680663,
+  "Weather Station OrchardMet", 42.449653, -72.680315,
+  "Weather Station WhatelyMet", 42.448470, -72.680553
+) %>%
+  st_as_sf(coords = c("long", "lat")) %>%
+  st_set_crs(4326)
+```
+
+
 ## Static maps
 
 You can make a basic static map with **ggplot2** using `geom_sf()`, as shown in the figure below.
