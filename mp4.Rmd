@@ -2,7 +2,7 @@
 title: "Put a real title here"
 subtitle: "SDS 192: MP4"
 author: 
-- name: Author One
+- name: Emily Rhyu
   affiliation: Smith College
 - name: Author Two
   affiliation: Smith College
