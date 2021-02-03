@@ -4,7 +4,7 @@ subtitle: "SDS 192: MP4"
 author: 
 - name: Emily Rhyu
   affiliation: Smith College
-- name: Author Two
+- name: Alicia Chen
   affiliation: Smith College
 - name: Elda Cervantes
   affiliation: Smith College
