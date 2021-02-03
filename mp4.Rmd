@@ -65,6 +65,11 @@ points_of_interest <- tribble(
   st_set_crs(4326)
 ```
 
+```{r}
+mass_gis("dcrtrails")
+```
+
+
 
 ## Static maps
 
