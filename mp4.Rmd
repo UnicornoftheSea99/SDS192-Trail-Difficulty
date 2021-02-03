@@ -38,6 +38,12 @@ library(sf)
 
 > READ THE INSTRUCTIONS: https://beanumber.github.io/sds192/mod_spatial.html
 
+Biking from Smith College to MacLeish is of interest to a subset of field station visitors. Considering that some bikers appreciate climbing hills and others wish to avoid hills, propose two alternative bike routes to the field station using the available data from MassGIS. Detail the lengths of the routes and the elevation change along the routes, and support your choices with data. It would be cool if you could create elevation profiles (e.g., this one) for each bike route.
+Supporting data includes:
+- Road shapefiles (retrieve from MassGIS)
+- 30’ contour elevation data (elevation)
+- Property boundary layer (boundary)
+
 
 ## Loading the data
 
