@@ -32,6 +32,7 @@ knitr::opts_chunk$set(
 library(tidyverse)
 library(sds192)
 library(sf)
+library(tidygeocoder)
 ```
 
 ## Introduction
@@ -67,7 +68,29 @@ points_of_interest <- tribble(
 
 ```{r}
 mass_gis("dcrtrails")
+
+boundary <- macleish_layers %>%
+  pluck("boundary")
+
+
+
+
+elevations <- macleish_layers %>%
+  pluck("elevation")
 ```
+
+```{r}
+colleges <- tribble(
+  ~school, ~address, 
+  "Smith", "44 College Lane, Northampton, MA 01063"
+  
+) %>%
+  geocode(address, method = "osm") %>%
+  st_as_sf(coords = c("long", "lat")) %>%
+  st_set_crs(4326)
+colleges
+```
+
 
 
 
@@ -76,11 +99,10 @@ mass_gis("dcrtrails")
 You can make a basic static map with **ggplot2** using `geom_sf()`, as shown in the figure below.
 
 ```{r static, fig.cap="The boundary of the MacLeish property."}
-boundary <- macleish_layers %>%
-  pluck("boundary")
 
 ggplot() +
-  geom_sf(data = boundary)
+  geom_sf(data = boundary) +
+  geom_sf(data = elevations)
 ```
 
 ## Dynamic maps
