@@ -88,6 +88,18 @@ colleges <- tribble(
   st_set_crs(4326)
 colleges
 ```
+```{r}
+#location of macleish
+mac <- leaflet() %>%
+  addTiles() %>%
+  addMarkers(
+    lng =  -72.68171351473106,
+    lat = 42.45467547936159,
+    popup = "Macleish"
+  )
+mac
+```
+
 
 ```{r, eval=FALSE}
 #might use to find flat/hilly path (50 is flattest/easiest)
