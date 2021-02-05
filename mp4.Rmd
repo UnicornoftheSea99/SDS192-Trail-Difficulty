@@ -77,18 +77,28 @@ elevations <- macleish_layers %>%
 ```
 
 ```{r}
-colleges <- tribble(
-  ~school, ~address, 
-  "Smith", "44 College Lane, Northampton, MA 01063"
+locations <- tribble(
+  ~place, ~address, 
+  "Smith", "44 College Lane, Northampton, MA 01063",
+  "Macleish", "30, 78 Poplar Hill Rd, South Deerfield, MA 01373"
   
 ) %>%
   #geocoding
   geocode(address, method = "osm") %>%
   st_as_sf(coords = c("long", "lat")) %>%
   st_set_crs(4326)
-colleges
+
+#maclongitude="-72.68171351473106"
+#maclatitude="42.45467547936159"
+#macleish <- tibble(place = "Macleish", #geometry="-72.68171351473106,42.45467547936159"
+#geometry=st_sfc(st_point(c(42.45467547936159,-72.68171351473106)))
+#)
+
+#locations <- locations %>% 
+#  inner_join(macleish, by = c("geometry"="geometry"))
 ```
-```{r}
+
+```{r, eval=FALSE}
 #location of macleish
 mac <- leaflet() %>%
   addTiles() %>%
@@ -119,7 +129,7 @@ trail_elevations <- longest_trail %>%
 
 You can make a basic static map with **ggplot2** using `geom_sf()`, as shown in the figure below.
 
-```{r static, fig.cap="The boundary of the MacLeish property."}
+```{r static, fig.cap="The boundary of the MacLeish property.",eval=FALSE}
 
 ggplot() +
   geom_sf(data = boundary) +
@@ -146,7 +156,7 @@ boundary_plot +
 
 You can make a basic dynamic map with **leaflet**, as shown in the figure below.
 
-```{r dynamic, fig.cap="The boundary of the MacLeish property."}
+```{r dynamic, fig.cap="The boundary of the MacLeish property.",eval=FALSE}
 library(leaflet)
 
 leaflet() %>%
