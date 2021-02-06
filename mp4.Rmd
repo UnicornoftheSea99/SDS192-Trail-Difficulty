@@ -39,11 +39,12 @@ library(tidygeocoder)
 
 > READ THE INSTRUCTIONS: https://beanumber.github.io/sds192/mod_spatial.html
 
-Biking from Smith College to MacLeish is of interest to a subset of field station visitors. Considering that some bikers appreciate climbing hills and others wish to avoid hills, propose two alternative bike routes to the field station using the available data from MassGIS. Detail the lengths of the routes and the elevation change along the routes, and support your choices with data. It would be cool if you could create elevation profiles (e.g., this one) for each bike route.
+MacLeish has approximately four miles of built trail for use by field station visitors. We would like to be able to classify these trails as “Easy,” “Moderate,” or “Difficult” based on their length and change in elevation. Use the spatial data to develop a heuristic that will classify these (or any other) trails based on their difficulty. You might want to consult existing trail rating systems. It would be cool if you could create elevation profiles (e.g., this one). Be sure to consult the extended example in MDSR, which walks you through creating an elevation map for one trail. This map has some noted weaknesses. Your goal should be to improve on it and/or make similar maps for all trails.
 Supporting data includes:
-- Road shapefiles (retrieve from MassGIS)
-- 30’ contour elevation data (elevation)
-- Property boundary layer (boundary)
+Existing trails layer (trails)
+30’ contour elevation data (elevation)
+3 meter contours can be retrieved from MassGIS (see help("mass_gis"))
+Property boundary shapefile (boundary)
 
 
 ## Loading the data
@@ -69,6 +70,8 @@ points_of_interest <- tribble(
 ```{r}
 trails <- mass_gis("dcrtrails")
 
+contour <- mass_gis("contours250k")
+
 boundary <- macleish_layers %>%
   pluck("boundary")
 
@@ -77,16 +80,16 @@ elevations <- macleish_layers %>%
 ```
 
 ```{r}
-locations <- tribble(
-  ~place, ~address, 
-  "Smith", "44 College Lane, Northampton, MA 01063",
-  "Macleish", "30, 78 Poplar Hill Rd, South Deerfield, MA 01373"
+#locations <- tribble(
+ # ~place, ~address, 
+  #"Smith", "44 College Lane, Northampton, MA 01063",
+  #"Macleish", "30, 78 Poplar Hill Rd, South Deerfield, MA 01373"
   
-) %>%
+#) %>%
   #geocoding
-  geocode(address, method = "osm") %>%
-  st_as_sf(coords = c("long", "lat")) %>%
-  st_set_crs(4326)
+ # geocode(address, method = "osm") %>%
+  #st_as_sf(coords = c("long", "lat")) %>%
+ # st_set_crs(4326)
 
 #maclongitude="-72.68171351473106"
 #maclatitude="42.45467547936159"
@@ -110,17 +113,65 @@ mac <- leaflet() %>%
 mac
 ```
 
+```{r}
+library(lwgeom)
+trails <- macleish_layers[["trails"]] 
+trails %>%
+  group_by(name) %>%
+  summarize(num_segments = n()) %>%
+  mutate(trail_length = st_length(geometry)) %>%
+  arrange(desc(trail_length))
+  
+```
 
 ```{r, eval=FALSE}
 #might use to find flat/hilly path (50 is flattest/easiest)
 #use summarize?
-rating <- sqrt(2 * gain * distance)
+#rating <- sqrt(2 * gain * distance)
+
+ longest_trail <- trails %>%
+   head(1)
 
 #finds elevation for trail in question. probably use to apply to flat/hilly trails found from equation above and make elevation profile
 trail_elevations <- longest_trail %>%
   st_intersection(elevations) %>%
-  st_cast("MULTIPOINT") %>%
-  st_cast("POINT")
+ st_cast("MULTIPOINT") %>%
+ st_cast("POINT")
+trail_elevations
+
+boundary_plot + 
+  geom_sf(data = forests, fill = "green", alpha = 0.1) + 
+  geom_sf(data = camp_sites, size = 4) + 
+  geom_sf_label(
+    data = camp_sites, aes(label = name), 
+    nudge_y = 0.001
+  )
+boundary_plot +
+  geom_sf(data = elevations, color = "dark gray") + 
+  geom_sf(data = longest_trail, color = "brown", size = 1.5) + 
+  geom_sf(data = trail_elevations, fill = "yellow", pch = 21, size = 3) + 
+  geom_sf_label(
+    data = trail_elevations, 
+    aes(label = CONTOUR_FT), 
+    hjust = "right", 
+    size = 2.5,
+    nudge_x = -0.0005
+  )
+
+trail_elevations <- trail_elevations %>%
+  mutate(lat = st_coordinates(geometry)[, 2]) %>%
+  arrange(lat) %>%
+  mutate(distance_from_start = as.numeric(st_distance(geometry)[, 1]))
+
+ggplot(trail_elevations, aes(x = distance_from_start)) + 
+  geom_ribbon(aes(ymax = CONTOUR_FT, ymin = 750)) +
+  scale_y_continuous("Elevation (feet above sea level)") + 
+  scale_x_continuous("Geodesic distance from trail head (meters)") +
+  labs(
+    title = "Trail elevation map: Snowmobile trail",
+    subtitle = "Whately, MA",
+    caption = "Source: macleish package for R"
+  )
 ```
 
 
@@ -133,7 +184,7 @@ You can make a basic static map with **ggplot2** using `geom_sf()`, as shown in 
 
 ggplot() +
   geom_sf(data = boundary) +
-  geom_sf(data = elevations)
+  geom_sf(data = elevations) 
 ```
 
 ```{r, eval=FALSE}
@@ -164,6 +215,15 @@ leaflet() %>%
   addPolygons(data = boundary)
 ```
 
+```{r}
+ggplot() +
+geom_sf(data = macleish_layers[["trails"]], color = "brown")
+```
+
+
+```{r}
+macleish_layers[["trails"]]
+```
 
 
 ## Word count
