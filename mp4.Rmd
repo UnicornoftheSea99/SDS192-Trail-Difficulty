@@ -114,7 +114,7 @@ mac
 ```{r, eval=FALSE}
 #might use to find flat/hilly path (50 is flattest/easiest)
 #use summarize?
-rating = sqrt(2 x gain x distance)
+rating <- sqrt(2 * gain * distance)
 
 #finds elevation for trail in question. probably use to apply to flat/hilly trails found from equation above and make elevation profile
 trail_elevations <- longest_trail %>%
