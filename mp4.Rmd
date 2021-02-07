@@ -99,17 +99,16 @@ trail_elevations <- trail_elevations %>%
   arrange(lat) %>%
   mutate(distance_from_start = as.numeric(st_distance(geometry)[, 1]))
 
-#graphName <- paste("Trail elevation map:", trailIn$name)
 
 ggplot(trail_elevations, aes(x = distance_from_start)) + 
   geom_ribbon(aes(ymax = CONTOUR_FT, ymin = 750)) +
   scale_y_continuous("Elevation (feet above sea level)") + 
   scale_x_continuous("Geodesic distance from trail head (meters)") +
-  #labs(
-    #title = graphName,
-    #subtitle = "Whately, MA",
-    #caption = "Source: macleish package for R"
-  #)+
+  labs(
+  title = "Trail Elevation Maps",
+  subtitle = "Trails at Macleish Station in Whately, MA",
+  caption = "Source: macleish package for R"
+  )+
   facet_wrap(~name)
 }
 
