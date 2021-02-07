@@ -139,7 +139,10 @@ longest_trail <- trails_full %>%
   head(1)
 
 #finds elevation for trail in question. probably use to apply to flat/hilly trails found from equation above and make elevation profile
-trail_elevations <- longest_trail %>%
+
+elevationGrapher <- function(trailIn){
+  
+  trail_elevations <- trailIn %>%
   st_intersection(elevations) %>%
  st_cast("MULTIPOINT") %>%
  st_cast("POINT")
@@ -167,15 +170,21 @@ trail_elevations <- trail_elevations %>%
   arrange(lat) %>%
   mutate(distance_from_start = as.numeric(st_distance(geometry)[, 1]))
 
+graphName <- paste("Trail elevation map:", trailIn$name)
+
 ggplot(trail_elevations, aes(x = distance_from_start)) + 
   geom_ribbon(aes(ymax = CONTOUR_FT, ymin = 750)) +
   scale_y_continuous("Elevation (feet above sea level)") + 
   scale_x_continuous("Geodesic distance from trail head (meters)") +
   labs(
-    title = "Trail elevation map: Snowmobile trail",
+    title = graphName,
     subtitle = "Whately, MA",
     caption = "Source: macleish package for R"
   )
+}
+
+elevationGrapher(longest_trail)
+
 ```
 
 
