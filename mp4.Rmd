@@ -56,7 +56,9 @@ names(macleish_layers)
 ```
 
 ```{r}
-trails <- mass_gis("dcrtrails")
+# trails <- mass_gis("dcrtrails")
+trails <- macleish_layers %>%
+  pluck("trails")
 
 contour <- mass_gis("contours250k")
 
@@ -77,8 +79,8 @@ trails_full <- trails %>%
   arrange(desc(trail_length))
 
 #sample for testing
-longest_trail <- trails_full %>%
-  head(1)
+# longest_trail <- trails_full %>%
+#   head(1)
 
 #finds elevation for all the trails by segments
 trail_elevations <- trails_full %>%
@@ -129,7 +131,7 @@ elevationGrapher(trail_elevations)
 
 You can make a basic static map with **ggplot2** using `geom_sf()`, as shown in the figure below.
 
-```{r static, fig.cap="The boundary of the MacLeish property."}
+```{r static, fig.cap="The boundary of the MacLeish property., eval=FALSE"}
 
 boundary_plot <- ggplot() +
   geom_sf(data = boundary) +
@@ -137,19 +139,20 @@ boundary_plot <- ggplot() +
 #scale_x_continuous(breaks = c(-72.677, -72.683))
 ```
 
-```{r, eval=FALSE}
+```{r,eval=FALSE}
 #will use later to map the all the trails on the map
-# boundary_plot +
-#   geom_sf(data = elevations, color = "dark gray") + 
-#   geom_sf(data = longest_trail, color = "brown", size = 1.5) + 
-#   geom_sf(data = trail_elevations, fill = "yellow", pch = 21, size = 3) + 
-#   geom_sf_label(
-#     data = trail_elevations, 
-#     aes(label = CONTOUR_FT), 
-#     hjust = "right", 
-#     size = 2.5,
-#     nudge_x = -0.0005
-#   )
+#not correct currently
+boundary_plot +
+  geom_sf(data = elevations, color = "dark gray") +
+  geom_sf(data = longest_trail, color = "brown", size = 1.5) +
+  geom_sf(data = trail_elevations, fill = "yellow", pch = 21, size = 3) +
+  geom_sf_label(
+    data = trail_elevations,
+    aes(label = CONTOUR_FT),
+    hjust = "right",
+    size = 2.5,
+    nudge_x = -0.0005
+  )
 ```
 
 
@@ -165,7 +168,7 @@ leaflet() %>%
   addPolygons(data = boundary)
 ```
 
-```{r}
+```{r, eval=FALSE}
 ggplot() +
 geom_sf(data = macleish_layers[["trails"]], color = "brown")
 ```
