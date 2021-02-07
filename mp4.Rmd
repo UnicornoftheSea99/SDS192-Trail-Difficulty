@@ -90,14 +90,14 @@ trail_elevations
 ```
 
 ```{r}
-elevationGrapher <- function(trailIn){
+elevationGrapher <- function(trail_elevations){
 
 trail_elevations <- trail_elevations %>%
   mutate(lat = st_coordinates(geometry)[, 2]) %>%
   arrange(lat) %>%
   mutate(distance_from_start = as.numeric(st_distance(geometry)[, 1]))
 
-graphName <- paste("Trail elevation map:", trailIn$name)
+#graphName <- paste("Trail elevation map:", trailIn$name)
 
 ggplot(trail_elevations, aes(x = distance_from_start)) + 
   geom_ribbon(aes(ymax = CONTOUR_FT, ymin = 750)) +
@@ -110,7 +110,7 @@ ggplot(trail_elevations, aes(x = distance_from_start)) +
   )
 }
 
-#elevationGrapher(longest_trail)
+elevationGrapher(trail_elevations)
 
 ```
 
