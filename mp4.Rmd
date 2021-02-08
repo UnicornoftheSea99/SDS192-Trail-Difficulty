@@ -36,9 +36,7 @@ library(tidygeocoder)
 library(lwgeom)
 ```
 
-## Introduction
-
-> READ THE INSTRUCTIONS: https://beanumber.github.io/sds192/mod_spatial.html
+## Prompt
 
 MacLeish has approximately four miles of built trail for use by field station visitors. We would like to be able to classify these trails as “Easy,” “Moderate,” or “Difficult” based on their length and change in elevation. Use the spatial data to develop a heuristic that will classify these (or any other) trails based on their difficulty. You might want to consult existing trail rating systems. It would be cool if you could create elevation profiles (e.g., this one). Be sure to consult the extended example in MDSR, which walks you through creating an elevation map for one trail. This map has some noted weaknesses. Your goal should be to improve on it and/or make similar maps for all trails.
 Supporting data includes:
@@ -47,6 +45,7 @@ Supporting data includes:
 - 3 meter contours can be retrieved from MassGIS (see help("mass_gis"))
 - Property boundary shapefile (boundary)
 
+## What We Did
 
 ## Loading the data
 
@@ -69,7 +68,7 @@ elevations <- macleish_layers %>%
   pluck("elevation")
 ```
 
-
+## Finding the Lengths and Elevations of all the Trails
 ```{r}
 #find the lengths of all the trails by segments
 trails_full <- trails %>%
@@ -77,10 +76,6 @@ trails_full <- trails %>%
   summarize(num_segments = n()) %>%
   mutate(trail_length = st_length(geometry)) %>%
   arrange(desc(trail_length))
-
-#sample for testing
-# longest_trail <- trails_full %>%
-#   head(1)
 
 #finds elevation for all the trails by segments
 trail_elevations <- trails_full %>%
@@ -91,8 +86,8 @@ trail_elevations
 
 ```
 
+## Elevation Maps 
 ```{r}
-#function so that we can get elevation maps for every trail
 elevationGrapher <- function(trail_elevations){
 
 trail_elevations <- trail_elevations %>%
@@ -118,7 +113,7 @@ elevationGrapher(trail_elevations)
 
 ```
 
-# The ratings using Shenandoah system
+## The Trail Ratings using Shenandoah system
 ```{r}
 trail_ratings <- trail_elevations %>%
   group_by(name)%>%
@@ -137,20 +132,14 @@ trail_ratings <- trail_ratings %>%
 
 ```
 
-#Mapping the things
-## Static maps
 
-You can make a basic static map with **ggplot2** using `geom_sf()`, as shown in the figure below.
+## Static maps
 
 ```{r static, fig.cap="The boundary of the MacLeish property., }
 
 boundary_plot <- ggplot() +
   geom_sf(data = boundary) 
-  #geom_sf(data = elevations) 
-#scale_x_continuous(breaks = c(-72.677, -72.683))
-```
 
-```{r}
 # map the all the trails on the map
 #need to make trails different colors
 #need to fix/label axis
@@ -168,12 +157,9 @@ boundary_plot +
   theme(axis.text.x = element_text (angle = 55, vjust = .89, hjust = .9))
 ```
 
-
 ## Dynamic maps
 
-You can make a basic dynamic map with **leaflet**, as shown in the figure below.
-
-```{r dynamic, fig.cap="The boundary of the MacLeish property.",eval=FALSE}
+```{r dynamic, fig.cap="The boundary of the MacLeish property."}
 library(leaflet)
 
 leaflet() %>%
@@ -182,17 +168,6 @@ leaflet() %>%
   addPolylines(data = trails, weight = 2, color = "brown") %>%
   addPolygons(data = elevations, weight = 1, color = "yellow")
 ```
-
-```{r, eval=FALSE}
-ggplot() +
-geom_sf(data = macleish_layers[["trails"]], color = "brown")
-```
-
-
-```{r}
-# macleish_layers[["trails"]]
-```
-
 
 ## Word count
 
@@ -211,4 +186,4 @@ In this assignment, we attempted the following [standards](https://beanumber.git
 - `r standard_button("markdown")`: We mastered the R Markdown standard because we...
 
 ## References
--http://derekogle.com/fishR/2018-03-30-Collapsing_Values
+
