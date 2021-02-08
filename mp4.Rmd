@@ -179,11 +179,11 @@ text_stats()
 
 In this assignment, we attempted the following [standards](https://beanumber.github.io/sds192/standards.html):
 
-- `r standard_button("wrangling")`: We met the Wrangling standard because we...
-- `r standard_button("spatial")`: We met the Spatial standard because we...
-- `r standard_button("leaflet")`: We met the Leaflet standard because we...
-- `r standard_button("aesthetics")`: We mastered the Aesthetics standard because we...
-- `r standard_button("markdown")`: We mastered the R Markdown standard because we...
+- `r standard_button("wrangling")`: We met the Wrangling standard since we used tools like group_by(), summarize(), and mutate() in order to manipulate our data for our purposes.
+- `r standard_button("spatial")`: We met the Spatial standard since we used shapefiles in conjunction with ggplot2 to create spatial plots.
+- `r standard_button("leaflet")`: We met the Leaflet standard since we created a leaflet map of the MacLeish area with geospatial layers.
+- `r standard_button("aesthetics")`: Markdown - We met the Markdown standard since the code we’ve written compiles properly, and we haven’t included things that would slow down the code unnecessarily, like the loading statements.
+- `r standard_button("markdown")`: We met the R Markdown standard since the code we’ve written compiles properly, and we haven’t included things that would slow down the code unnecessarily, like the loading statements.
 
 ## References
 
