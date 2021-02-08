@@ -141,7 +141,7 @@ You can make a basic static map with **ggplot2** using `geom_sf()`, as shown in 
 ```{r static, fig.cap="The boundary of the MacLeish property., }
 
 boundary_plot <- ggplot() +
-  geom_sf(data = boundary) +
+  geom_sf(data = boundary) 
   #geom_sf(data = elevations) 
 #scale_x_continuous(breaks = c(-72.677, -72.683))
 ```
@@ -174,7 +174,9 @@ library(leaflet)
 
 leaflet() %>%
   addTiles() %>%
-  addPolygons(data = boundary)
+  addPolygons(data = boundary, weight = 3) %>%
+  addPolylines(data = trails, weight = 2, color = "brown") %>%
+  addPolygons(data = elevations, weight = 1, color = "yellow")
 ```
 
 ```{r, eval=FALSE}
