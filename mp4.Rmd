@@ -45,7 +45,10 @@ Supporting data includes:
 - 3 meter contours can be retrieved from MassGIS (see help("mass_gis"))
 - Property boundary shapefile (boundary)
 
-## What We Did
+## How We Did It
+Our group chose Prompt 1, which asked us to classify the trails of MacLeish into levels of difficulty using their length and change in elevation. We began by exploring the MacLeish package in R Studio and familiarized ourselves with the dataset, “macleish_layers.” Our next step was figuring out the length of each trail and calculating each one’s elevation. We ran into some problems while creating a function to graph the elevation of all the trails. We first tested out the function with the longest trail in the dataset, and then tested it with other, randomly selected trails. This seemed to work, but we ran into another issue after doing this. Although our function worked when we passed separate trails in as arguments, it didn’t work when we tried to use the map() function to do the same with the entire “trails_full” dataset. We then attempted to split the dataset into separate rows and use a for loop to call our function for each trail, but this gave us more errors (albeit different ones). Ultimately, we decided to graph every trail at once and facet wrap it by name to produce the elevation maps of all the trails. We encountered an issue where some of the trails’ graphs were cut off, but were able to fix it after some help from our peers in the questions channel in the class Slack.
+
+The ratings for the trails weren't very distinctive initially. All the trail levels were “Easy” according to the Shenandoah rating system as the area of MacLeish is pretty much flat and even the longest trail is only about 1.6 miles. Therefore, we created our own rating system in order to accommodate for the smaller scale: ratings 0-5 are ranked easy, ratings 5-10 are ranked moderate, and ratings 10-20 are ranked difficult. 
 
 ## Loading the data
 ```{r, message=FALSE}
@@ -182,13 +185,6 @@ leaflet() %>%
 ```{r word_count, message=FALSE, echo=FALSE}
 text_stats()
 ```
-
-## Writeup
-
-Our group chose Prompt 1, which asked us to classify the trails of MacLeish into levels of difficulty using their length and change in elevation. We began by exploring the MacLeish package in R Studio and familiarized ourselves with the dataset, “macleish_layers.” Our next step was figuring out the length of each trail and calculating each one’s elevation. We ran into some problems while creating a function to graph the elevation of all the trails. We first tested out the function with the longest trail in the dataset, and then tested it with other, randomly selected trails. This seemed to work, but we ran into another issue after doing this. Although our function worked when we passed separate trails in as arguments, it didn’t work when we tried to use the map() function to do the same with the entire “trails_full” dataset. We then attempted to split the dataset into separate rows and use a for loop to call our function for each trail, but this gave us more errors (albeit different ones). Ultimately, we decided to graph every trail at once and facet wrap it by name to produce the elevation maps of all the trails. We encountered an issue where some of the trails’ graphs were cut off, but were able to fix it after some help from our peers in the questions channel in the class Slack.
-
-The ratings for the trails weren't very distinctive initially. All the trail levels were “Easy” according to the Shenandoah rating system as the area of MacLeish is pretty much flat and even the longest trail is only about 1.6 miles. Therefore, we created our own rating system in order to accommodate for the smaller scale: ratings 0-5 are ranked easy, ratings 5-10 are ranked moderate, and ratings 10-20 are ranked difficult. 
-
 
 ## Standards
 
