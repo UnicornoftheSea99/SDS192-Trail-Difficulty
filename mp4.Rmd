@@ -37,7 +37,6 @@ library(lwgeom)
 ```
 
 ## Prompt
-
 MacLeish has approximately four miles of built trail for use by field station visitors. We would like to be able to classify these trails as “Easy,” “Moderate,” or “Difficult” based on their length and change in elevation. Use the spatial data to develop a heuristic that will classify these (or any other) trails based on their difficulty. You might want to consult existing trail rating systems. It would be cool if you could create elevation profiles (e.g., this one). Be sure to consult the extended example in MDSR, which walks you through creating an elevation map for one trail. This map has some noted weaknesses. Your goal should be to improve on it and/or make similar maps for all trails.
 
 Supporting data includes:
@@ -49,7 +48,6 @@ Supporting data includes:
 ## What We Did
 
 ## Loading the data
-
 ```{r, message=FALSE}
 library(macleish)
 ```
@@ -131,9 +129,7 @@ trail_ratings <- trail_ratings %>%
 
 ```
 
-
 ## Static maps
-
 ```{r static }
 
 boundary_plot <- ggplot() +
@@ -154,7 +150,6 @@ boundary_plot +
 ```
 
 ## Dynamic maps
-
 ```{r dynamic}
 library(leaflet)
 
@@ -166,7 +161,6 @@ leaflet() %>%
 ```
 
 ## Word count
-
 ```{r word_count, message=FALSE, echo=FALSE}
 text_stats()
 ```
@@ -175,11 +169,19 @@ text_stats()
 
 In this assignment, we attempted the following [standards](https://beanumber.github.io/sds192/standards.html):
 
-- `r standard_button("wrangling")`: We met the Wrangling standard since we used tools like group_by(), summarize(), and mutate() in order to manipulate our data for our purposes.
+- `r standard_button("wrangling")`: We mastered the Wrangling standard since we used tools like group_by(), summarize(), and mutate() in order to manipulate our data for our purposes. We thereby optimized readability and performance.
 - `r standard_button("spatial")`: We met the Spatial standard since we used shapefiles in conjunction with ggplot2 to create spatial plots.
 - `r standard_button("leaflet")`: We met the Leaflet standard since we created a leaflet map of the MacLeish area with geospatial layers.
-- `r standard_button("aesthetics")`: Markdown - We met the Markdown standard since the code we’ve written compiles properly, and we haven’t included things that would slow down the code unnecessarily, like the loading statements.
-- `r standard_button("markdown")`: We met the R Markdown standard since the code we’ve written compiles properly, and we haven’t included things that would slow down the code unnecessarily, like the loading statements.
+- `r standard_button("aesthetics")`: We mastered the aesthetics standard as the data graphics are customized and make use of different geoms and colors.
+- `r standard_button("markdown")`: We mastered the R Markdown standard since the code we’ve written compiles properly, and we haven’t included things that would slow down the code unnecessarily, like the loading statements.
+- `r standard_button("github")`: We mastered the Github standard as we used Github to effectively work together.
+- `r standard_button("context")`: We mastered the Context standard as all of our data graphics are clearly labeled and tell a story.
+- `r standard_button("iteration")`: We mastered the Iteration standard since we applied a function, elevationGrapher, to multiple rows and variables.
+- `r standard_button("function")`: We mastered the Function standard since we wrote a user-defined function, elevationGrapher, that takes in the data on all the trails and then gives an elevation map for each one.
 
 ## References
+- Benjamin S. Baumer, Rose Goueth, Wencong Li, Weijia Zhang and Nicholas Horton (NA). macleish: Retrieve Data from MacLeish Field Station. R package version 0.3.6. http://github.com/beanumber/macleish
+- Baumer, Benjamin, et al. Modern Data Science with R. CRC Press, 2021. 
+- Margalit, Sivan. “Sort Values Into Groups by Ranges.” RStudio Community, 11 Apr. 2020, community.rstudio.com/t/sort-values-into-groups-by-ranges/60881. 
+- Ogle, Derek H. “Collapsing Categories or Values.” Derek Ogle, 30 Mar. 2018, derekogle.com/fishR/2018-03-30-Collapsing_Values. 
 
