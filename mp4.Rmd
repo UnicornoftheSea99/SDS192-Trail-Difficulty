@@ -163,7 +163,8 @@ leaflet() %>%
   addPolylines(
     data = trails,
     weight = 2,
-    color = ~ pal(trail_ratings$difficulty)
+    color = ~ pal(trail_ratings$difficulty),
+    label=trails$name 
   ) %>%
   addPolygons(data = elevations,
               weight = 1,
