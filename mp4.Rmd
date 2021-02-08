@@ -134,9 +134,7 @@ trail_ratings <- trail_ratings %>%
 
 ## Static maps
 ```{r static }
-# map the all the trails on the map
-#need to make trails different colors
-#need to fix/label axis
+
 boundary_plot <- ggplot() +
   geom_sf(data = boundary) 
 
@@ -162,8 +160,8 @@ boundary_plot +
     nudge_x = -0.0005
   ) +
   theme(axis.text.x = element_text (angle = 55, vjust = .89, hjust = .9)) + 
-  scale_colour_manual(name="Trails",values = c("Snowmobile Trail" = "lightblue", "Eastern Loop" = "blue", "Western Loop" = "steelblue"))
-
+  scale_colour_manual(name="Trails",values = c("Snowmobile Trail" = "lightblue", "Eastern Loop" = "blue", "Western Loop" = "steelblue"))+
+xlab("Longitude(Degrees West)")+
   ylab("Latitude(Degrees North)")+
   labs(
     title = "Trails at Macleish Station"
