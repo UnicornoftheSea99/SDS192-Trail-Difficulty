@@ -203,5 +203,6 @@ In this assignment, we attempted the following [standards](https://beanumber.git
 ## References
 - Benjamin S. Baumer, Rose Goueth, Wencong Li, Weijia Zhang and Nicholas Horton (NA). macleish: Retrieve Data from MacLeish Field Station. R package version 0.3.6. http://github.com/beanumber/macleish
 - Baumer, Benjamin, et al. Modern Data Science with R. CRC Press, 2021. 
+- Majerus, Rich, et al. “Creating a Color Palette Using ColorFactor.” R, Datacamp, campus.datacamp.com/courses/interactive-maps-with-leaflet-in-r/plotting-points?ex=15. 
 - Margalit, Sivan. “Sort Values Into Groups by Ranges.” RStudio Community, 11 Apr. 2020, community.rstudio.com/t/sort-values-into-groups-by-ranges/60881. 
 - Ogle, Derek H. “Collapsing Categories or Values.” Derek Ogle, 30 Mar. 2018, derekogle.com/fishR/2018-03-30-Collapsing_Values. 
