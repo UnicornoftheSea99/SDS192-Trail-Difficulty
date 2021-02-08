@@ -88,25 +88,22 @@ trail_elevations
 
 ## Elevation Maps 
 ```{r}
-elevationGrapher <- function(trail_elevations){
-
-trail_elevations <- trail_elevations %>%
-  group_by(name)%>%
-  mutate(lat = st_coordinates(geometry)[, 2]) %>%
-  arrange(lat) %>%
-  mutate(distance_from_start = as.numeric(st_distance(geometry)[, 1]))
-
-
-ggplot(trail_elevations, aes(x = distance_from_start)) + 
-  geom_ribbon(aes(ymax = CONTOUR_FT, ymin = 750)) +
-  scale_y_continuous("Elevation (feet above sea level)") + 
-  scale_x_continuous("Geodesic distance from trail head (meters)") +
-  labs(
-  title = "Trail Elevation Maps",
-  subtitle = "Trails at Macleish Station in Whately, MA",
-  caption = "Source: macleish package for R"
-  )+
-  facet_wrap(~name)
+elevationGrapher <- function(trail_elevations) {
+  trail_elevations <- trail_elevations %>%
+    group_by(name) %>%
+    mutate(lat = st_coordinates(geometry)[, 2]) %>%
+    arrange(lat) %>%
+    mutate(distance_from_start = as.numeric(st_distance(geometry)[, 1]))
+  
+  
+  ggplot(trail_elevations, aes(x = distance_from_start)) +
+    geom_ribbon(aes(ymax = CONTOUR_FT, ymin = 750)) +
+    scale_y_continuous("Elevation (feet above sea level)") +
+    scale_x_continuous("Geodesic distance from trail head (meters)") +
+    labs(title = "Trail Elevation Maps",
+         subtitle = "Trails at Macleish Station in Whately, MA",
+         caption = "Source: macleish package for R") +
+    facet_wrap( ~ name)
 }
 
 elevationGrapher(trail_elevations)
@@ -116,7 +113,7 @@ elevationGrapher(trail_elevations)
 ## The Trail Ratings using Shenandoah system
 ```{r}
 trail_ratings <- trail_elevations %>%
-  group_by(name)%>%
+  group_by(name) %>%
   summarize(
     gain = max(CONTOUR_FT) - min(CONTOUR_FT),
     trail_length = max(units::set_units(trail_length, "miles")),
@@ -136,22 +133,56 @@ trail_ratings <- trail_ratings %>%
 ```{r static }
 
 boundary_plot <- ggplot() +
-  geom_sf(data = boundary) 
+  geom_sf(data = boundary)
 
-bluePalette <- c("lightblue", "blue", "steelblue", "azure", "cadetblue", "cornsilk", "darkblue", "powderblue", "royalblue")
+bluePalette <-
+  c(
+    "lightblue",
+    "blue",
+    "steelblue",
+    "azure",
+    "cadetblue",
+    "cornsilk",
+    "darkblue",
+    "powderblue",
+    "royalblue"
+  )
 
 boundary_plot +
   geom_sf(data = elevations, color = "dark gray") +
-  geom_sf(data = trails_full[1, ], color = "lightblue", size = 1.5) +
-  geom_sf(data = trails_full[2, ], color = "blue", size = 1.5) +
-  geom_sf(data = trails_full[3, ], color = "steelblue", size = 1.5) +
-  geom_sf(data = trails_full[4, ], color = "azure", size = 1.5) +
-  geom_sf(data = trails_full[5, ], color = "cadetblue", size = 1.5) +
-  geom_sf(data = trails_full[6, ], color = "cornsilk", size = 1.5) +
-  geom_sf(data = trails_full[7, ], color = "darkblue", size = 1.5) +
-  geom_sf(data = trails_full[8, ], color = "powderblue", size = 1.5) +
-  geom_sf(data = trails_full[9, ], color = "royalblue", size = 1.5) +
-  geom_sf(data = trail_elevations, fill = "yellow", pch = 21, size = 3) +
+  geom_sf(data = trails_full[1,],
+          color = "lightblue",
+          size = 1.5) +
+  geom_sf(data = trails_full[2,],
+          color = "blue",
+          size = 1.5) +
+  geom_sf(data = trails_full[3,],
+          color = "steelblue",
+          size = 1.5) +
+  geom_sf(data = trails_full[4,],
+          color = "azure",
+          size = 1.5) +
+  geom_sf(data = trails_full[5,],
+          color = "cadetblue",
+          size = 1.5) +
+  geom_sf(data = trails_full[6,],
+          color = "cornsilk",
+          size = 1.5) +
+  geom_sf(data = trails_full[7,],
+          color = "darkblue",
+          size = 1.5) +
+  geom_sf(data = trails_full[8,],
+          color = "powderblue",
+          size = 1.5) +
+  geom_sf(data = trails_full[9,],
+          color = "royalblue",
+          size = 1.5) +
+  geom_sf(
+    data = trail_elevations,
+    fill = "yellow",
+    pch = 21,
+    size = 3
+  ) +
   geom_sf_label(
     data = trail_elevations,
     aes(label = CONTOUR_FT),
@@ -159,22 +190,33 @@ boundary_plot +
     size = 2.5,
     nudge_x = -0.0005
   ) +
-  theme(axis.text.x = element_text (angle = 55, vjust = .89, hjust = .9)) + 
-  scale_colour_manual(name="Trails",values = c("Snowmobile Trail" = "lightblue", "Eastern Loop" = "blue", "Western Loop" = "steelblue"))+
-xlab("Longitude(Degrees West)")+
-  ylab("Latitude(Degrees North)")+
-  labs(
-    title = "Trails at Macleish Station"
-  )
+  theme(axis.text.x = element_text (
+    angle = 55,
+    vjust = .89,
+    hjust = .9
+  )) +
+  scale_colour_manual(
+    name = "Trails",
+    values = c(
+      "Snowmobile Trail" = "lightblue",
+      "Eastern Loop" = "blue",
+      "Western Loop" = "steelblue"
+    )
+  ) +
+  xlab("Longitude(Degrees West)") +
+  ylab("Latitude(Degrees North)") +
+  labs(title = "Trails at Macleish Station")
 ```
 
 ## Dynamic maps
 ```{r dynamic}
 library(leaflet)
 
-pal <- 
-   colorFactor(palette = c("green", "blue", "red"), 
-               levels = c("Easy", "Moderate", "Difficult"))
+pal <-
+  colorFactor(
+    palette = c("green", "blue", "red"),
+    levels = c("Easy", "Moderate", "Difficult")
+  )
 
 leaflet() %>%
   addTiles() %>%
@@ -183,18 +225,18 @@ leaflet() %>%
     data = trails,
     weight = 2,
     color = ~ pal(trail_ratings$difficulty),
-    label=trails$name 
+    label = trails$name
   ) %>%
   addPolygons(data = elevations,
               weight = 1,
-              color = "yellow") %>% 
-              addLegend(
-                title = "Trail Difficulty",
-                position = "bottomright",
-                pal = pal,
-                values=c("Easy", "Moderate", "Difficult"),
-                opacity = 1
-)
+              color = "yellow") %>%
+  addLegend(
+    title = "Trail Difficulty",
+    position = "bottomright",
+    pal = pal,
+    values = c("Easy", "Moderate", "Difficult"),
+    opacity = 1
+  )
 ```
 
 ## Word count
