@@ -39,6 +39,7 @@ library(lwgeom)
 ## Prompt
 
 MacLeish has approximately four miles of built trail for use by field station visitors. We would like to be able to classify these trails as “Easy,” “Moderate,” or “Difficult” based on their length and change in elevation. Use the spatial data to develop a heuristic that will classify these (or any other) trails based on their difficulty. You might want to consult existing trail rating systems. It would be cool if you could create elevation profiles (e.g., this one). Be sure to consult the extended example in MDSR, which walks you through creating an elevation map for one trail. This map has some noted weaknesses. Your goal should be to improve on it and/or make similar maps for all trails.
+
 Supporting data includes:
 - Existing trails layer (trails)
 - 30’ contour elevation data (elevation)
@@ -135,7 +136,7 @@ trail_ratings <- trail_ratings %>%
 
 ## Static maps
 
-```{r static, fig.cap="The boundary of the MacLeish property., }
+```{r static }
 
 boundary_plot <- ggplot() +
   geom_sf(data = boundary) 
@@ -159,7 +160,7 @@ boundary_plot +
 
 ## Dynamic maps
 
-```{r dynamic, fig.cap="The boundary of the MacLeish property."}
+```{r dynamic}
 library(leaflet)
 
 leaflet() %>%
