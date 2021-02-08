@@ -149,7 +149,9 @@ boundary_plot +
     size = 2.5,
     nudge_x = -0.0005
   ) +
-  theme(axis.text.x = element_text (angle = 55, vjust = .89, hjust = .9))
+  theme(axis.text.x = element_text (angle = 55, vjust = .89, hjust = .9))+
+  xlab("Longitude (Degrees West)")+
+  ylab("Latitude(Degrees North)")
 ```
 
 ## Dynamic maps
