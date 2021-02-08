@@ -135,9 +135,6 @@ trail_ratings <- trail_ratings %>%
 ## Static maps
 ```{r static }
 
-# map the all the trails on the map
-#need to make trails different colors
-#need to fix/label axis
 boundary_plot <- ggplot() +
   geom_sf(data = boundary) 
 
