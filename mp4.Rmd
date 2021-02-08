@@ -1,5 +1,5 @@
 ---
-title: "Put a real title here"
+title: "Difficulty of Trails at Macleish Station"
 subtitle: "SDS 192: MP4"
 author: 
 - name: Emily Rhyu
@@ -118,11 +118,18 @@ elevationGrapher(trail_elevations)
 
 ```
 
-##Trying to get the ratings
+# The ratings
 ```{r}
-#might use to find flat/hilly path (50 is flattest/easiest)
-#use summarize?
-#rating <- sqrt(2 * gain * distance)
+trail_ratings <- trail_elevations %>%
+  group_by(name)%>%
+  summarize(
+    gain = max(CONTOUR_FT) - min(CONTOUR_FT),
+    trail_length = max(units::set_units(trail_length, "miles")),
+    rating = sqrt(gain * 2 * as.numeric(trail_length))
+  )
+
+trail_ratings <- trail_ratings %>%
+  mutate()
 
 ```
 
