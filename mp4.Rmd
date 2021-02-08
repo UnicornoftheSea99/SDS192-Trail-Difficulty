@@ -121,7 +121,7 @@ trail_ratings <- trail_elevations %>%
   )
 
 trail_ratings <- trail_ratings %>%
-  mutate(is_difficult = case_when(
+  mutate(difficulty = case_when(
     between(rating, 0, 5) ~ "Easy",
     between(rating, 5, 10) ~ "Moderate",
     between(rating, 10, 20) ~ "Difficult",
@@ -153,10 +153,14 @@ boundary_plot +
 ```{r dynamic}
 library(leaflet)
 
+pal <- 
+   colorFactor(palette = c("green", "blue", "red"), 
+               levels = c("Easy", "Moderate", "Difficult"))
+
 leaflet() %>%
   addTiles() %>%
   addPolygons(data = boundary, weight = 3) %>%
-  addPolylines(data = trails, weight = 2, color = "brown") %>%
+  addPolylines(data = trails, weight = 2, color = ~pal(trail_ratings$difficulty)) %>%
   addPolygons(data = elevations, weight = 1, color = "yellow")
 ```
 
