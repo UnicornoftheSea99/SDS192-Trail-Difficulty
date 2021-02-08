@@ -139,9 +139,6 @@ trail_ratings <- trail_ratings %>%
 boundary_plot <- ggplot() +
   geom_sf(data = boundary) 
 
-# map the all the trails on the map
-#need to make trails different colors
-#need to fix/label axis
 boundary_plot +
   geom_sf(data = elevations, color = "dark gray") +
   geom_sf(data = trails, color = "brown", size = 1.5) +
