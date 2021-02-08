@@ -52,11 +52,9 @@ Supporting data includes:
 
 ```{r, message=FALSE}
 library(macleish)
-names(macleish_layers)
 ```
 
 ```{r}
-# trails <- mass_gis("dcrtrails")
 trails <- macleish_layers %>%
   pluck("trails")
 
@@ -126,9 +124,9 @@ trail_ratings <- trail_elevations %>%
 
 trail_ratings <- trail_ratings %>%
   mutate(is_difficult = case_when(
-    between(rating, 0, 50) ~ "Easy",
-    between(rating, 50, 150) ~ "Moderate",
-    between(rating, 150, 300) ~ "Difficult",
+    between(rating, 0, 5) ~ "Easy",
+    between(rating, 5, 10) ~ "Moderate",
+    between(rating, 10, 20) ~ "Difficult",
   ))
 
 ```
