@@ -160,8 +160,21 @@ pal <-
 leaflet() %>%
   addTiles() %>%
   addPolygons(data = boundary, weight = 3) %>%
-  addPolylines(data = trails, weight = 2, color = ~pal(trail_ratings$difficulty)) %>%
-  addPolygons(data = elevations, weight = 1, color = "yellow")
+  addPolylines(
+    data = trails,
+    weight = 2,
+    color = ~ pal(trail_ratings$difficulty)
+  ) %>%
+  addPolygons(data = elevations,
+              weight = 1,
+              color = "yellow") %>% 
+              addLegend(
+                title = "Trail Difficulty",
+                position = "bottomright",
+                pal = pal,
+                values=c("Easy", "Moderate", "Difficult"),
+                opacity = 1
+)
 ```
 
 ## Word count
