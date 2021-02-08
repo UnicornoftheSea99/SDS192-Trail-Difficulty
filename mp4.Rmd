@@ -118,7 +118,7 @@ elevationGrapher(trail_elevations)
 
 ```
 
-# The ratings
+# The ratings using Shenandoah system
 ```{r}
 trail_ratings <- trail_elevations %>%
   group_by(name)%>%
@@ -129,7 +129,11 @@ trail_ratings <- trail_elevations %>%
   )
 
 trail_ratings <- trail_ratings %>%
-  mutate()
+  mutate(is_difficult = case_when(
+    between(rating, 0, 50) ~ "Easy",
+    between(rating, 50, 150) ~ "Moderate",
+    between(rating, 150, 300) ~ "Difficult",
+  ))
 
 ```
 
@@ -205,3 +209,4 @@ In this assignment, we attempted the following [standards](https://beanumber.git
 - `r standard_button("markdown")`: We mastered the R Markdown standard because we...
 
 ## References
+-http://derekogle.com/fishR/2018-03-30-Collapsing_Values
